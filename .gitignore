@@ -1,34 +1,19 @@
-[Ll]ibrary/
-[Tt]emp/
-[Oo]bj/
+# CMake / Visual Studio 构建输出
 [Bb]uild/
-[Bb]uilds/
-[Ll]ogs/
-[Uu]ser[Ss]ettings/
+out/
 .vs/
-.idea/
-MemoryCaptures/
-Recordings/
-
-# Auto-generated IDE files
-*.csproj
-*.unityproj
-*.sln
-*.suo
-*.tmp
+CMakeUserPresets.json
 *.user
-*.userprefs
-*.pidb
-*.booproj
-*.svd
-*.pdb
-*.mdb
-*.opendb
-*.VC.db
 
-# Unity generated meta for generated files
-sysinfo.txt
+# 运行时日志
+SekiroDog.log
+
+# Blender 备份
+*.blend1
 
 # OS files
 .DS_Store
 Thumbs.db
+
+# 角色源文件过大（>100MB），不纳入版本库
+SourceArt/*.blend

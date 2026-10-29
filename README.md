@@ -1,71 +1,69 @@
-# Unity 3D ARPG Demo
+# SekiroDog
 
-该项目是一个基于 **Unity 2022** 开发的第三人称 3D ARPG 动作战斗 Demo，重点覆盖了 **角色移动、连招战斗、动画驱动位移、敌人 AI、导航追击、相机跟随、数据驱动配置** 等核心模块。
+基于 **C++20 + Direct3D 11** 的第三人称 3D 动作游戏（开发中）。
 
-## 演示视频
+## 当前进度
 
-[点击这里查看视频](https://youtu.be/aJLQZP_k4_A)
+- 玩家角色：狼武士（Dog Warrior），GPU 骨骼蒙皮，Idle / Run 动画平滑过渡
+- 操作：
+  - `W/A/S/D`：相对相机方向奔跑，松开回到待机
+  - 鼠标：点击窗口锁定鼠标后转动视角；`Esc` 解锁，再按一次退出
+- 场景：棋盘格地面（1 米一格）+ 参照柱子
 
+## 第三方库（git submodule，位于 `ThirdParty/`）
 
-## 项目亮点
+| 库 | 版本 | 用途 |
+| --- | --- | --- |
+| [DirectXTK](https://github.com/microsoft/DirectXTK) | may2026 | 键鼠输入、SimpleMath、WIC 贴图加载、截图、几何体 |
+| [Assimp](https://github.com/assimp/assimp) | v6.0.5 | 读取 FBX（网格、骨骼、动画），只编译 FBX 导入器 |
 
-- 基于 **有限状态机（FSM）** 拆分玩家移动状态与战斗状态，实现待机、移动、闪避、普攻、受击等状态切换
-- 使用 **Animator + Animation Event + Root Motion** 驱动动作表现与战斗流程，保证角色步幅、攻击节奏和动画表现一致
-- 基于 **CharacterController** 实现角色移动与碰撞处理，并扩展了攻击过程中的目标吸附、撞墙修正与重力逻辑
-- 为敌人构建 **巡逻 / 索敌 / 追击 / 返回 / 攻击 / 受击** 等 AI 状态，并结合 **NavMeshAgent** 实现寻路意图与实际位移解耦
-- 使用 **ScriptableObject** 管理角色战斗参数、AI 行为参数和血量等配置，提升系统可扩展性与调参效率
-- 集成 **Cinemachine、Input System、URP**，完成第三人称动作相机、输入映射等基础应用
+克隆后先拉取子模块：
 
-## 主要技术
+```bash
+git submodule update --init --recursive
+```
 
-- FSM状态机
-- C#
-- Animator / Animation Event
-- CharacterController
-- NavMesh Agent
-- Input System
-- ScriptableObject
-- URP
-- 面向对象设计、状态机拆分、数据驱动配置
+## 编译运行
 
-## 技术实现说明
+需要 Visual Studio 2026（含 C++ 桌面开发工作负载）。
 
-### 1. 玩家动作与战斗系统
+- 命令行：运行 `build.cmd`（默认 Release，`build.cmd x64-debug` 编译 Debug），生成 `build/x64-release/Game/SekiroDog.exe`
+- Visual Studio：直接“打开文件夹”，选择 `x64-release` / `x64-debug` 预设（`CMakePresets.json`）
 
-- 将玩家逻辑拆分为 **移动状态机** 与 **战斗状态机** 两套状态系统
-- 通过动画事件驱动攻击窗口、伤害结算与状态切换
-- 使用 Root Motion + CharacterController，使攻击与位移动作更加贴合动画节奏
-- 在攻击逻辑中加入了 **目标位置修正** 与 **贴墙修正**，降低挥刀穿模和攻击错位问题
+程序直接从工程目录读取 `Assets/` 和 `Game/shaders/`（路径在编译时写入），着色器在启动时编译。日志写到工作目录下的 `SekiroDog.log`。
 
-### 2. 敌人 AI 与导航系统
+调试参数：`--auto-run`（模拟按住 W）、`--camera-yaw <度>`、`--capture <png> <帧号>`（截图后退出）。
 
-- 敌人具备基础的 **索敌、巡逻、追击、返回、攻击、受击** 行为
-- 将 **NavMeshAgent** 作为“路径与方向决策层”，为敌人提供移动方向，但不直接驱动敌人 transform变化
-- 实际位移仍由动画位移与 CharacterController 执行，从而减少寻路速度与动画步幅不一致带来的漂移感
-- 在敌人攻击状态中补充了 **目标修正** 与 **近墙攻击修正**，使近距离战斗表现更稳定
+## 目录结构
 
-### 3. 数据驱动与工程组织
+```
+Game/
+  src/
+    main.cpp               窗口、主循环、输入
+    Graphics.*             D3D11 设备 / 交换链 / 着色器编译
+    SkinnedModel.*         FBX 加载、动画采样与混合、蒙皮绘制
+    Player.*               移动与动画状态（IsRunning 混合权重）
+    ThirdPersonCamera.*    第三人称环绕相机
+    Environment.*          地面与参照物
+  shaders/                 Common.hlsli / Skinned.hlsl / Lit.hlsl
+Assets/Player/             角色 FBX 与贴图（由 SourceArt 导出）
+SourceArt/                 角色 .blend 源文件与导出脚本
+ThirdParty/                DirectXTK、Assimp
+```
 
-- 通过 ScriptableObject 配置战斗数据、AI 行为数据、角色属性和受击信息
-- 通过统一状态接口与状态机基类降低系统耦合度，便于扩展更多技能、敌人行为和角色类型
-- 项目结构以玩法系统和角色逻辑为核心，适合作为 Unity Gameplay / 客户端岗位作品展示
-- 
+## 美术资源流程
 
-## 运行环境
+修改 `.blend` 后重新导出（减面到约 5 万顶点、导出贴图、生成待机动画、按 NLA 轨道导出 Run/Idle）：
 
-- Unity Editor: `2022.3.62f3c1`
-- Rendering Pipeline: `URP`
+```bash
+blender -b SourceArt/Dog_Warrior_Fast_Run_HandsFixed.blend --python SourceArt/export_player_fbx.py
+```
+
+- 源文件中没有完整的待机动画，`Idle` 由脚本里的 `make_idle_action()` 生成（手臂下垂 + 呼吸起伏）
+- 新增动画：在 `CLIPS` 中加入 `"片段名": "Blender动作名"`，代码中用 `SkinnedModel::FindClip("片段名")` 取用
+
+> `.blend` 源文件约 104MB，超过 GitHub 单文件 100MB 限制，提交前请使用 Git LFS 或不纳入版本库。
 
 ## 素材声明
 
-本项目中的 **角色模型、动作、美术贴图、场景资源等演示资源均来自网络公开素材**，仅用于 **学习、技术研究与个人求职作品展示**，**不用于任何商业用途**。
-
-本项目主要展示内容为个人完成的：
-
-- Unity 客户端程序设计
-- 玩法系统搭建
-- 状态机与战斗逻辑实现
-- 动画驱动位移与碰撞处理
-- 敌人 AI 与导航逻辑实现
-
-如相关素材版权方认为存在不妥使用，请联系删除。
+角色模型、动作、贴图等演示资源仅用于学习与个人作品展示，不用于商业用途。
