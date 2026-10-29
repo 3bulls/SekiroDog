@@ -1,10 +1,20 @@
 @echo off
-rem Configure and build with Ninja in the VS 2026 dev environment (Debug: build.cmd x64-debug)
+rem Command-line build of SekiroDog.sln with MSBuild.
+rem Usage: build.cmd [Debug|Release]   (default: Release)
 setlocal
 set NoDefaultCurrentDirectoryInExePath=
-set PRESET=%1
-if "%PRESET%"=="" set PRESET=x64-release
-call "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Auxiliary\Build\vcvars64.bat" >nul || exit /b 1
 cd /d "%~dp0"
-cmake --preset %PRESET% || exit /b 1
-cmake --build --preset %PRESET%
+set "CONFIG=%~1"
+if "%CONFIG%"=="" set "CONFIG=Release"
+
+set "VSWHERE=%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe"
+set "MSBUILD="
+for /f "usebackq delims=" %%i in (`"%VSWHERE%" -version [18.0^,19.0^) -products * -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe`) do set "MSBUILD=%%i"
+if not defined MSBUILD (
+    echo Visual Studio 2026 with the "Desktop development with C++" workload was not found.
+    exit /b 1
+)
+
+"%MSBUILD%" SekiroDog.sln /m /nologo /v:minimal /p:Configuration=%CONFIG% /p:Platform=x64 || exit /b 1
+echo.
+echo Built: %~dp0bin\x64\%CONFIG%\SekiroDog.exe

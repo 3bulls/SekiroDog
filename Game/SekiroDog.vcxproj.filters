@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;inl</Extensions>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx</Extensions>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{A1B2C3D4-0F1E-4D2C-8B3A-5F6E7D8C9B0A}</UniqueIdentifier>
+      <Extensions>hlsl;hlsli;fx;fxh</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Environment.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="include\Graphics.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="include\Log.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="include\Player.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="include\SkinnedModel.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="include\ThirdPersonCamera.h"><Filter>Header Files</Filter></ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Environment.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="src\Graphics.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="src\main.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="src\Player.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="src\SkinnedModel.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="src\ThirdPersonCamera.cpp"><Filter>Source Files</Filter></ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\Common.hlsli"><Filter>Shaders</Filter></None>
+    <None Include="shaders\Lit.hlsl"><Filter>Shaders</Filter></None>
+    <None Include="shaders\Skinned.hlsl"><Filter>Shaders</Filter></None>
+  </ItemGroup>
+</Project>

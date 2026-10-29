@@ -1,19 +1,21 @@
-# CMake / Visual Studio 构建输出
-[Bb]uild/
-out/
+# Visual Studio
 .vs/
-CMakeUserPresets.json
+bin/
+obj/
 *.user
+*.aps
+
+# DirectXTK 构建输出与首次编译生成的着色器
+ThirdParty/DirectXTK/Bin/
+ThirdParty/DirectXTK/Src/Shaders/Compiled/
 
 # 运行时日志
 SekiroDog.log
 
-# Blender 备份
+# 角色源文件过大（>100MB），不纳入版本库
+SourceArt/*.blend
 *.blend1
 
 # OS files
 .DS_Store
 Thumbs.db
-
-# 角色源文件过大（>100MB），不纳入版本库
-SourceArt/*.blend

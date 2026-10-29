@@ -55,6 +55,22 @@ namespace
         return opt;
     }
 
+    // 从 exe 所在目录向上查找包含 Assets/ 和 Game/shaders/ 的工程根目录
+    fs::path FindProjectRoot()
+    {
+        wchar_t exePath[MAX_PATH] = {};
+        GetModuleFileNameW(nullptr, exePath, MAX_PATH);
+        for (const fs::path& start : { fs::path(exePath).parent_path(), fs::current_path() })
+            for (fs::path dir = start; !dir.empty(); dir = dir.parent_path())
+            {
+                if (fs::exists(dir / "Assets" / "Player") && fs::exists(dir / "Game" / "shaders"))
+                    return dir;
+                if (dir == dir.root_path())
+                    break;
+            }
+        return fs::current_path();
+    }
+
     class Game
     {
     public:
@@ -74,7 +90,8 @@ namespace
             m_frameCB.Create(device);
             m_objectCB.Create(device);
 
-            const fs::path root = SEKIRO_ROOT;
+            const fs::path root = FindProjectRoot();
+            Log("Project root: %ls", root.c_str());
             const fs::path shaders = root / "Game" / "shaders";
             const fs::path player = root / "Assets" / "Player";
 
