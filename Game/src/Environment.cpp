@@ -5,12 +5,16 @@
 #include <GeometricPrimitive.h>
 #include <VertexTypes.h>
 #include "Log.h"
+#include "Scene.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
-bool Environment::Initialize(ID3D11Device* device, const std::wstring& shaderPath)
+bool Environment::Initialize(const InitArgs& args)
 {
+    ID3D11Device* device = args.device;
+    const std::wstring shaderPath = (args.shaderDir / "Lit.hlsl").wstring();
+
     // 所有物体共用一个单位立方体
     GeometricPrimitive::VertexCollection vertices;
     GeometricPrimitive::IndexCollection indices;
@@ -48,12 +52,26 @@ bool Environment::Initialize(ID3D11Device* device, const std::wstring& shaderPat
         float h = height(rng);
         m_instances.push_back({ Matrix::CreateScale(0.6f, h, 0.6f) * Matrix::CreateTranslation(p.x, h * 0.5f, p.y),
                                 Vector4(0.35f, 0.28f, 0.22f, 1.0f), false });
+
+        // 柱子是静态碰撞体；地面不需要（玩家始终在 y = 0）
+        Collider collider;
+        collider.owner = Handle();
+        collider.shape = BoxShape{ Vector3(p.x, h * 0.5f, p.y), Vector3(0.3f, h * 0.5f, 0.3f) };
+        collider.layer = CollisionLayer::Static;
+        m_colliders.push_back(GetScene().Collisions().Add(collider));
     }
     return true;
 }
 
-void Environment::Draw(ID3D11DeviceContext* context, ConstantBuffer<ObjectConstants>& objectCB)
+// 场景是静态的，暂时没有每帧逻辑
+void Environment::Update(const UpdateArgs&)
 {
+}
+
+void Environment::Draw(const DrawArgs& args)
+{
+    ID3D11DeviceContext* context = args.context;
+    ConstantBuffer<ObjectConstants>& objectCB = args.objectCB;
     const UINT stride = sizeof(VertexPositionNormalTexture), offset = 0;
     context->IASetInputLayout(m_layout.Get());
     context->IASetVertexBuffers(0, 1, m_vertexBuffer.GetAddressOf(), &stride, &offset);
@@ -76,4 +94,19 @@ void Environment::Draw(ID3D11DeviceContext* context, ConstantBuffer<ObjectConsta
         objectCB.SetData(context, object);
         context->DrawIndexed(m_indexCount, 0, 0);
     }
+}
+
+void Environment::Finalize()
+{
+    for (Collider* collider : m_colliders)
+        GetScene().Collisions().Remove(collider);
+    m_colliders.clear();
+    m_instances.clear();
+    m_rasterizer.Reset();
+    m_layout.Reset();
+    m_ps.Reset();
+    m_vs.Reset();
+    m_indexBuffer.Reset();
+    m_vertexBuffer.Reset();
+    m_indexCount = 0;
 }

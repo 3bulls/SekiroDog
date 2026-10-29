@@ -1,13 +1,18 @@
 #pragma once
-#include <Mouse.h>
 #include <SimpleMath.h>
+#include "GameObject.h"
 
-// 第三人称环绕相机：鼠标锁定（相对模式）时控制视角
-class ThirdPersonCamera
+// 第三人称环绕相机：Update 里用鼠标（锁定时）控制视角，LateUpdate 里跟随玩家本帧的最终位置
+class ThirdPersonCamera : public GameObject
 {
 public:
-    void Update(float dt, const DirectX::Mouse::State& mouse, const DirectX::SimpleMath::Vector3& target);
     void SetYaw(float yaw) { m_yaw = yaw; }
+
+    bool Initialize(const InitArgs& args) override;
+    void Update(const UpdateArgs& args) override;
+    void LateUpdate(const UpdateArgs& args) override;
+    void Draw(const DrawArgs& args) override;
+    void Finalize() override;
 
     DirectX::SimpleMath::Matrix View() const;
     const DirectX::SimpleMath::Vector3& Position() const { return m_eye; }
@@ -20,6 +25,7 @@ public:
     float maxPitch = 1.2f;
 
 private:
+    ObjectHandle m_target;
     float m_yaw = 0.0f;             // 与 Player 相同：0 = 看向 +Z
     float m_pitch = 0.25f;
     bool m_hasPivot = false;

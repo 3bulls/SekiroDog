@@ -26,7 +26,8 @@ class SkinnedModel
 public:
     static constexpr int MaxBones = 128;
 
-    bool Load(ID3D11Device* device, ID3D11DeviceContext* context, const SkinnedModelDesc& desc);
+    bool Initialize(ID3D11Device* device, ID3D11DeviceContext* context, const SkinnedModelDesc& desc);
+    void Finalize();
 
     // 返回名字包含 nameContains 的动画片段索引，找不到返回 -1
     int FindClip(const std::string& nameContains) const;

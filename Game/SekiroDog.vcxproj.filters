@@ -15,20 +15,37 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Animator.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="include\Application.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="include\CollisionSystem.h"><Filter>Header Files</Filter></ClInclude>
     <ClInclude Include="include\Environment.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="include\EventBus.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="include\Game.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="include\GameEvents.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="include\GameObject.h"><Filter>Header Files</Filter></ClInclude>
     <ClInclude Include="include\Graphics.h"><Filter>Header Files</Filter></ClInclude>
     <ClInclude Include="include\Log.h"><Filter>Header Files</Filter></ClInclude>
     <ClInclude Include="include\Player.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="include\PlayerStates.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="include\Scene.h"><Filter>Header Files</Filter></ClInclude>
     <ClInclude Include="include\SkinnedModel.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="include\StateMachine.h"><Filter>Header Files</Filter></ClInclude>
     <ClInclude Include="include\ThirdPersonCamera.h"><Filter>Header Files</Filter></ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Animator.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="src\Application.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="src\CollisionSystem.cpp"><Filter>Source Files</Filter></ClCompile>
     <ClCompile Include="src\Environment.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="src\EventBus.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="src\Game.cpp"><Filter>Source Files</Filter></ClCompile>
     <ClCompile Include="src\Graphics.cpp"><Filter>Source Files</Filter></ClCompile>
-    <ClCompile Include="src\main.cpp"><Filter>Source Files</Filter></ClCompile>
     <ClCompile Include="src\Player.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="src\PlayerStates.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="src\Scene.cpp"><Filter>Source Files</Filter></ClCompile>
     <ClCompile Include="src\SkinnedModel.cpp"><Filter>Source Files</Filter></ClCompile>
     <ClCompile Include="src\ThirdPersonCamera.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="src\main.cpp"><Filter>Source Files</Filter></ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\Common.hlsli"><Filter>Shaders</Filter></None>

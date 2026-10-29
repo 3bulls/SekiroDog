@@ -77,7 +77,7 @@ namespace
     }
 }
 
-bool SkinnedModel::Load(ID3D11Device* device, ID3D11DeviceContext* context, const SkinnedModelDesc& desc)
+bool SkinnedModel::Initialize(ID3D11Device* device, ID3D11DeviceContext* context, const SkinnedModelDesc& desc)
 {
     Assimp::Importer importer;
     importer.SetPropertyBool(AI_CONFIG_IMPORT_FBX_PRESERVE_PIVOTS, false);
@@ -400,4 +400,30 @@ void SkinnedModel::Draw(ID3D11DeviceContext* context, const Matrix& world, Const
     context->PSSetSamplers(0, 1, m_sampler.GetAddressOf());
 
     context->DrawIndexed(m_indexCount, 0, 0);
+}
+
+void SkinnedModel::Finalize()
+{
+    m_nodes.clear();
+    m_bindPose.clear();
+    m_nodeIndex.clear();
+    m_boneNode.clear();
+    m_boneOffset.clear();
+    m_clips.clear();
+    m_poseA.clear();
+    m_poseB.clear();
+    m_globals.clear();
+    m_boneMatrices.clear();
+
+    m_bonesCB = {};
+    m_rasterizer.Reset();
+    m_sampler.Reset();
+    for (auto& texture : m_textures)
+        texture.Reset();
+    m_layout.Reset();
+    m_ps.Reset();
+    m_vs.Reset();
+    m_indexBuffer.Reset();
+    m_vertexBuffer.Reset();
+    m_indexCount = 0;
 }

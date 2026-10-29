@@ -71,20 +71,37 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\Animator.h" />
+    <ClInclude Include="include\Application.h" />
+    <ClInclude Include="include\CollisionSystem.h" />
     <ClInclude Include="include\Environment.h" />
+    <ClInclude Include="include\EventBus.h" />
+    <ClInclude Include="include\Game.h" />
+    <ClInclude Include="include\GameEvents.h" />
+    <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\Graphics.h" />
     <ClInclude Include="include\Log.h" />
     <ClInclude Include="include\Player.h" />
+    <ClInclude Include="include\PlayerStates.h" />
+    <ClInclude Include="include\Scene.h" />
     <ClInclude Include="include\SkinnedModel.h" />
+    <ClInclude Include="include\StateMachine.h" />
     <ClInclude Include="include\ThirdPersonCamera.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Animator.cpp" />
+    <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\CollisionSystem.cpp" />
     <ClCompile Include="src\Environment.cpp" />
+    <ClCompile Include="src\EventBus.cpp" />
+    <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Graphics.cpp" />
-    <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\PlayerStates.cpp" />
+    <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\SkinnedModel.cpp" />
     <ClCompile Include="src\ThirdPersonCamera.cpp" />
+    <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <!-- 着色器在运行时编译，这里只为方便在 VS 中编辑 -->
   <ItemGroup>

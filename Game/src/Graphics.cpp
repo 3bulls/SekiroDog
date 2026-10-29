@@ -57,6 +57,22 @@ bool Graphics::Initialize(HWND hwnd, int width, int height)
     return true;
 }
 
+void Graphics::Finalize()
+{
+    if (m_context)
+    {
+        m_context->ClearState();
+        m_context->Flush();
+    }
+    m_dsv.Reset();
+    m_rtv.Reset();
+    m_backBuffer.Reset();
+    m_swapChain.Reset();
+    m_context.Reset();
+    m_device.Reset();
+    m_hwnd = nullptr;
+}
+
 void Graphics::Resize(int width, int height)
 {
     width = std::max(width, 1);

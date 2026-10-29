@@ -30,6 +30,7 @@ class Graphics
 {
 public:
     bool Initialize(HWND hwnd, int width, int height);
+    void Finalize();
     void Resize(int width, int height);
     void BeginFrame(const float clearColor[4]);
     void Present();

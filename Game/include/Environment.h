@@ -1,16 +1,18 @@
 #pragma once
-#include <string>
 #include <vector>
-#include <BufferHelpers.h>
 #include <SimpleMath.h>
-#include "Graphics.h"
+#include "GameObject.h"
+
+struct Collider;
 
 // 测试场景：棋盘格地面 + 随机柱子作为参照物
-class Environment
+class Environment : public GameObject
 {
 public:
-    bool Initialize(ID3D11Device* device, const std::wstring& shaderPath);
-    void Draw(ID3D11DeviceContext* context, DirectX::ConstantBuffer<ObjectConstants>& objectCB);
+    bool Initialize(const InitArgs& args) override;
+    void Update(const UpdateArgs& args) override;
+    void Draw(const DrawArgs& args) override;
+    void Finalize() override;
 
 private:
     struct Instance
@@ -28,4 +30,5 @@ private:
     ComPtr<ID3D11InputLayout> m_layout;
     ComPtr<ID3D11RasterizerState> m_rasterizer;
     std::vector<Instance> m_instances;
+    std::vector<Collider*> m_colliders;    // 柱子的静态碰撞体
 };
