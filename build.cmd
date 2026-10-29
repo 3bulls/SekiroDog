@@ -1,5 +1,5 @@
 @echo off
-rem 用 VS 2026 开发环境配置并编译 Release（Debug: build.cmd x64-debug）
+rem Configure and build with Ninja in the VS 2026 dev environment (Debug: build.cmd x64-debug)
 setlocal
 set NoDefaultCurrentDirectoryInExePath=
 set PRESET=%1

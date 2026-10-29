@@ -4,6 +4,11 @@ project(SekiroDog LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Visual Studio：第三方库归入解决方案文件夹，F5 直接启动游戏
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+set(CMAKE_FOLDER ThirdParty)
+set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT SekiroDog)
+
 # ---------- Assimp：只编译 FBX 导入器 ----------
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
 set(ASSIMP_BUILD_ALL_IMPORTERS_BY_DEFAULT OFF CACHE BOOL "" FORCE)
@@ -26,4 +31,5 @@ set(BUILD_XAUDIO_WIN8 OFF CACHE BOOL "" FORCE)
 set(BUILD_TESTING OFF CACHE BOOL "" FORCE)
 add_subdirectory(ThirdParty/DirectXTK EXCLUDE_FROM_ALL)
 
+set(CMAKE_FOLDER "")
 add_subdirectory(Game)

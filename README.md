@@ -25,10 +25,13 @@ git submodule update --init --recursive
 
 ## 编译运行
 
-需要 Visual Studio 2026（含 C++ 桌面开发工作负载）。
+需要 Visual Studio 2026（含“使用 C++ 的桌面开发”工作负载）。
 
-- 命令行：运行 `build.cmd`（默认 Release，`build.cmd x64-debug` 编译 Debug），生成 `build/x64-release/Game/SekiroDog.exe`
-- Visual Studio：直接“打开文件夹”，选择 `x64-release` / `x64-debug` 预设（`CMakePresets.json`）
+- **Visual Studio 解决方案（推荐）**：双击 `generate_vs.cmd`，生成 `build/vs2026/SekiroDog.slnx`，用 VS 打开后按 F5 即可运行（`generate_vs.cmd open` 生成后直接打开）。
+  - `SekiroDog` 已设为启动项目，调试工作目录为工程根目录；第三方库在解决方案的 `ThirdParty` 文件夹中
+  - 修改了 CMakeLists.txt 或新增源文件后，VS 编译时会自动重新生成工程（ZERO_CHECK）
+- 命令行：运行 `build.cmd`（Ninja，默认 Release，`build.cmd x64-debug` 编译 Debug），生成 `build/x64-release/Game/SekiroDog.exe`
+- 也可以在 VS 中“打开文件夹”，使用 `CMakePresets.json` 中的 `x64-release` / `x64-debug` 预设
 
 程序直接从工程目录读取 `Assets/` 和 `Game/shaders/`（路径在编译时写入），着色器在启动时编译。日志写到工作目录下的 `SekiroDog.log`。
 
